@@ -36,22 +36,8 @@ x
 	</style>
 </head>
 <body>
-	<button onclick="leerTodoElTexto()">Presiona para Leer en Voz Alta</button><script>
-        function leerTodoElTexto() {
-            // Seleccionar todos los elementos que queremos leer
-            var elementos = document.querySelectorAll('h1, h2, h3, h4, h5, p');
-            var textoCompleto = '';
-
-            // Recorrer los elementos y concatenar su texto
-            elementos.forEach(function(elemento) {
-                textoCompleto += elemento.innerText + ' ';
-            });
-
-            // Crear una instancia de SpeechSynthesisUtterance con el texto completo
-            var mensaje = new SpeechSynthesisUtterance(textoCompleto);
-            window.speechSynthesis.speak(mensaje);
-        }
-    </script>
+	        <button style="width: 200px; height: 50px;background-color: yellow;font-size: 16px;" onclick="leerEnVozAlta()">Presionar para Leer en Voz Alta</button>
+       
 <div class="content">
 <h2>El tema de las Herej&iacute;as tratadas en la patr&iacute;stica.</h2>
 
@@ -93,5 +79,32 @@ Nueva Era : todos somos Dios.<br />
 El Nestorianismo: Separa a Cristos en dos entidades distintas , una humana y otra divina.<br />
 EN EL SIGLO IV Arrianismo:Jes&uacute;s no era Dios en si mismo.</p>
 </div>
+	<script>
+     function leerEnVozAlta() {
+    // Obtener el texto del elemento con la clase "contenido-texto"
+    var texto = document.querySelector('.content').innerText;
+
+    // Dividir el texto en segmentos mÃ¡s pequeÃ±os
+    var partes = dividirTextoEnPartes(texto, 500); // Por ejemplo, 200 caracteres por parte
+
+    // Leer cada parte secuencialmente
+    partes.forEach((parte) => {
+        var mensaje = new SpeechSynthesisUtterance(parte);
+        mensaje.lang = 'es-ES';
+        mensaje.pitch = .9;
+        mensaje.rate = 1;
+        window.speechSynthesis.speak(mensaje);
+    });
+}
+
+function dividirTextoEnPartes(texto, tamano) {
+    var partes = [];
+    for (var i = 0; i < texto.length; i += tamano) {
+        partes.push(texto.slice(i, i + tamano));
+    }
+    return partes;
+}
+
+    </script> 
 </body>
 </html>
